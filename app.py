@@ -5,16 +5,18 @@ from openpyxl import Workbook
 
 app = Flask(__name__)
 
-import mysql.connector
+try:
+    conn = mysql.connector.connect(
+        host="gondola.proxy.rlwy.net",
+        user="root",
+        password="pICnbTsJRSQzZwHfXuhCpcSwZOpsXTPj",
+        database="railway",
+        port=58689
+    )
+    print("DB Connected ✅")
+except Exception as e:
+    print("DB Error:", e)
 
-conn = mysql.connector.connect(
-    host="gondola.proxy.rlwy.net",
-    user="root",
-    password="pICnbTsJRSQzZwHfXuhCpcSwZOpsXTPj",
-    database="railway",
-    port=58689
-
-)
 cursor = conn.cursor()
 
 @app.route('/')
