@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 15px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 15px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .links a:hover {
+            background: #0b7dda;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>📊 Attendance Dashboard</h2>
+
+<div class="container">
+
+    <!-- In-Time -->
+    <div class="box">
+        <h3>Mark In-Time</h3>
+        <form action="/intime" method="post">
+            <input name="emp_id" placeholder="Employee ID" required>
+            <input name="name" placeholder="Name" required>
+            <button>In-Time</button>
+        </form>
+
+    </div>
+
+    <!-- Out-Time -->
+    <div class="box">
+        <h3>Mark Out-Time</h3>
+        <form action="/outtime" method="post">
+            <input name="emp_id" placeholder="Employee ID" required>
+            <button>Out-Time</button>
+        </form>
+    </div>
+
+    <!-- Work Report -->
+    <div class="box">
+        <h3>📋 Add Work Report</h3>
+        <form action="/work" method="post">
+            <input name="emp_id" placeholder="Employee ID" required>
+            <input name="task" placeholder="Task" required>
+            <input name="status" placeholder="Status" required>
+            <button>Submit Work</button>
+        </form>
+    </div>
+
+</div>
+
+<div class="links">
+    <a href="/view">📄 View Attendance</a>
+    <a href="/monthly">📅 Monthly Attendance</a>
+    <a href="/download_excel">📥 Download Excel</a>
+</div>
+
+</body>
+</html>

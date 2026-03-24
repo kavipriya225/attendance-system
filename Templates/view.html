@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View</title>
+</head>
+<body>
+
+<h2>📊 Full Attendance Table</h2>
+
+<table border="1" align="center">
+<tr>
+<th>ID</th><th>Emp ID</th><th>Name</th><th>Date</th><th>In</th><th>Out</th><th>Hours</th><th>Task</th><th>Status</th>
+</tr>
+
+{% for row in data %}
+<tr>
+<td>{{row[0]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+<td>{{row[3]}}</td>
+<td>{{row[4]}}</td>
+<td>{{row[5]}}</td>
+<td>{{row[6]}}</td>
+<td>{{row[7]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+<a href="/dashboard">⬅ Back</a>
+
+</body>
+</html>
