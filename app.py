@@ -109,13 +109,26 @@ def monthly():
 
     attendance = {}
 
-    for name, date in data:
-        day = int(str(date).split('-')[2])
+    for row in data:
+        try:
+            name = row[0]
+            date = row[1]
 
-        if name not in attendance:
-            attendance[name] = ['A'] * total_days
+            if not name or not date:
+                continue
 
-        attendance[name][day - 1] = 'P'
+            # handle string date safely
+            day = int(str(date)[-2:])
+
+            if name not in attendance:
+                attendance[name] = ['A'] * total_days
+
+            if 1 <= day <= total_days:
+                attendance[name][day - 1] = 'P'
+
+        except Exception as e:
+            print("Skipping row error:", e)
+            continue
 
     return render_template("monthly.html",
                            attendance=attendance,
