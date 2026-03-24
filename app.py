@@ -13,11 +13,10 @@ try:
         database="railway",
         port=58689
     )
+    cursor = conn.cursor()
     print("DB Connected ✅")
 except Exception as e:
     print("DB Error:", e)
-
-cursor = conn.cursor()
 
 @app.route('/')
 def home():
