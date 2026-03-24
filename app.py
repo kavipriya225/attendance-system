@@ -3,7 +3,9 @@ import mysql.connector
 from datetime import datetime
 from openpyxl import Workbook
 import os
-
+from flask import send_file
+import pandas as pd
+import io
 app = Flask(__name__)
 
 try:
@@ -93,21 +95,23 @@ def view():
 
 @app.route('/monthly')
 def monthly():
-    cursor.execute("SELECT emp_id, date FROM attendance")
-    data = cursor.fetchall()
+    try:
+        cursor.execute("SELECT * FROM attendance")
+        data = cursor.fetchall()
 
-    attendance = {}
+        df = pd.DataFrame(data, columns=[
+            "id","name","date","intime","outtime","work_hours","task","status"
+        ])
 
-    for name, date in data:
-        day = date.day
+        # create excel in memory
+        output = io.BytesIO()
+        df.to_excel(output, index=False)
+        output.seek(0)
 
-        if name not in attendance:
-            attendance[name] = ['A'] * 31
+        return send_file(output, download_name="attendance.xlsx", as_attachment=True)
 
-        attendance[name][day-1] = 'P'
-
-    return render_template("monthly.html", data=attendance)
-
+    except Exception as e:
+        return f"Error: {e}"
 @app.route('/download_excel')
 def download_excel():
 
