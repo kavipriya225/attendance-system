@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial;
-            background: #f4f4f4;
+            background: #f4f6f9;
             text-align: center;
         }
 
@@ -14,50 +14,46 @@
             margin-top: 20px;
         }
 
-        table {
-            border-collapse: collapse;
-            margin: 20px auto;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 5px;
-            text-align: center;
-            font-size: 12px;
-        }
-
-        th {
-            background: #2196F3;
-            color: white;
-        }
-
-        .present {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .absent {
-            background-color: #f44336;
-            color: white;
-        }
-
         button {
-            padding: 10px 20px;
-            margin: 15px;
-            background: #4CAF50;
-            color: white;
+            padding: 8px 15px;
+            margin: 10px;
             border: none;
             border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
             cursor: pointer;
         }
 
         button:hover {
-            background: #45a049;
+            background-color: #45a049;
         }
 
-        a {
-            text-decoration: none;
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 95%;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            font-size: 12px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .present {
+            color: green;
+            font-weight: bold;
+        }
+
+        .absent {
+            color: red;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -66,32 +62,33 @@
 
 <h2>📅 Monthly Attendance</h2>
 
-<!-- Download Button -->
-<a href="/download_excel">
-    <button>📥 Download Excel</button>
+<!-- Buttons -->
+<a href="/">
+    <button>⬅️ Back</button>
+</a>
+
+<a href="/download">
+    <button>⬇️ Download Excel</button>
 </a>
 
 <table>
 
 <tr>
     <th>Name</th>
-
-    {% for i in range(1, 32) %}
-        <th>{{ i }}</th>
+    {% for d in days %}
+        <th>{{ d }}</th>
     {% endfor %}
-
     <th>Total</th>
 </tr>
 
-{% for name, days in data.items() %}
+{% for name, records in attendance.items() %}
 <tr>
-
-    <td><b>{{ name }}</b></td>
+    <td>{{ name }}</td>
 
     {% set total = 0 %}
 
-    {% for d in days %}
-        {% if d == 'P' %}
+    {% for val in records %}
+        {% if val == 'P' %}
             <td class="present">P</td>
             {% set total = total + 1 %}
         {% else %}
@@ -99,18 +96,11 @@
         {% endif %}
     {% endfor %}
 
-    <td><b>{{ total }}</b></td>
-
+    <td>{{ total }}</td>
 </tr>
 {% endfor %}
 
 </table>
-
-<br>
-
-<a href="/dashboard">
-    <button>⬅ Back to Dashboard</button>
-</a>
 
 </body>
 </html>
