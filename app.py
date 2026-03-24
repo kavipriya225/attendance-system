@@ -95,23 +95,31 @@ def view():
 
 @app.route('/monthly')
 def monthly():
-    try:
-        cursor.execute("SELECT * FROM attendance")
-        data = cursor.fetchall()
+    import calendar
+    from datetime import datetime
 
-        df = pd.DataFrame(data, columns=[
-            "id","name","date","intime","outtime","work_hours","task","status"
-        ])
+    cursor.execute("SELECT name, date FROM attendance")
+    data = cursor.fetchall()
 
-        # create excel in memory
-        output = io.BytesIO()
-        df.to_excel(output, index=False)
-        output.seek(0)
+    today = datetime.today()
+    year = today.year
+    month = today.month
 
-        return send_file(output, download_name="attendance.xlsx", as_attachment=True)
+    total_days = calendar.monthrange(year, month)[1]
 
-    except Exception as e:
-        return f"Error: {e}"
+    attendance = {}
+
+    for name, date in data:
+        day = int(str(date).split('-')[2])
+
+        if name not in attendance:
+            attendance[name] = ['A'] * total_days
+
+        attendance[name][day - 1] = 'P'
+
+    return render_template("monthly.html",
+                           attendance=attendance,
+                           days=range(1, total_days + 1))
 @app.route('/download_excel')
 def download_excel():
 
